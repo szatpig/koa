@@ -6,6 +6,7 @@ const logger = require('koa-logger');
 
 const config = require('./config');
 const route = require('./routes');
+const InterfaceBuffer = require('./lib/InterfaceHelper');
 
 const app = new Koa();
 
@@ -23,6 +24,15 @@ app.use(async (ctx, next) => {
         logger.error(`${err.status} -- ${err.message}\n${err.stack}`)
     }
 });
+
+app.use(async (ctx, next) => {
+    await next();
+    if (ctx.status === 404) {
+        ctx.body = '404 No Found';
+    }
+});
+
+app.use(InterfaceBuffer('^/api'));
 
 
 app.use(route.routes()).use(route.allowedMethods());
