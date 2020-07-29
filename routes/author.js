@@ -4,7 +4,7 @@ const Router = require('koa-router');
 const author =  require('./../controller/authorController');
 
 const router =  new Router({
-    prefix:'/author'
+    prefix:'/auth'
 });
 
 router.post('/login',author.login);
